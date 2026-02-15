@@ -1,18 +1,41 @@
 <link rel="stylesheet" href="style.css">
+
 <div class="container">
 <h1>MCQ Generator</h1>
-<textarea id="text"></textarea>
+
+<textarea id="text" rows="5" placeholder="Paste paragraph here"></textarea>
+
 <button onclick="generate()">Generate</button>
+
 <div id="output"></div>
 </div>
 
 <script>
 function generate(){
- fetch('/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:text.value})})
+ fetch('/generate',{
+  method:'POST',
+  headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({text:text.value})
+ })
  .then(res=>res.json())
  .then(data=>{
   output.innerHTML='';
-  data.forEach(q=>output.innerHTML+=`<p>${q.question}<br>${q.options.join('<br>')}</p>`);
+
+  data.forEach((q,i)=>{
+
+    output.innerHTML += `
+      <div class="question-card">
+        <h3>Question ${i+1}</h3>
+        <p>${q.question}</p>
+      </div>
+
+      <div class="options-card">
+        ${q.options.map(opt=>`<div class="option-item">${opt}</div>`).join('')}
+      </div>
+    `;
+  });
+
  });
 }
 </script>
+
