@@ -52,3 +52,25 @@ textarea,input{width:100%;padding:10px;border-radius:10px;border:none;margin:10p
   margin:5px;
   border-radius:8px;
 }
+.question-card{
+  background:rgba(255,255,255,0.2);
+  padding:15px;
+  border-radius:12px;
+  margin-top:20px;
+  text-align:left;
+}
+
+.options-card{
+  background:rgba(255,255,255,0.12);
+  padding:15px;
+  border-radius:12px;
+  margin-bottom:15px;
+}
+
+.option-item{
+  background:rgba(255,255,255,0.25);
+  padding:8px;
+  margin:5px 0;
+  border-radius:8px;
+}
+
