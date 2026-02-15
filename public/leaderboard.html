@@ -1,0 +1,15 @@
+<link rel="stylesheet" href="style.css">
+<div class="container">
+<h1>Leaderboard</h1>
+<div id="board"></div>
+</div>
+
+<script>
+fetch('/leaderboard')
+.then(res=>res.json())
+.then(data=>{
+ data.forEach((u,i)=>{
+  board.innerHTML+=`<div class="leaderboard-item">${i+1}. ${u.name}<span>${u.score}</span></div>`;
+ });
+});
+</script>

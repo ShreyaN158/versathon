@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="style.css">
+<div class="container">
+<h1>MCQ Generator</h1>
+<textarea id="text"></textarea>
+<button onclick="generate()">Generate</button>
+<div id="output"></div>
+</div>
+
+<script>
+function generate(){
+ fetch('/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:text.value})})
+ .then(res=>res.json())
+ .then(data=>{
+  output.innerHTML='';
+  data.forEach(q=>output.innerHTML+=`<p>${q.question}<br>${q.options.join('<br>')}</p>`);
+ });
+}
+</script>
