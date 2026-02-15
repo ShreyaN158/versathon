@@ -2,6 +2,9 @@ const express = require('express');
 const fs = require('fs');
 const fetch = require('node-fetch');
 
+const path = require("path");
+
+
 const app = express();
 app.use(express.json());
 app.use(express.static('public'));
@@ -27,16 +30,43 @@ app.get('/quiz', async (req,res)=>{
 });
 
 // Submit score
-app.post('/submit',(req,res)=>{
-  data.leaderboard.push(req.body);
-  data.leaderboard.sort((a,b)=>b.score-a.score);
+app.post('/submit', (req, res) => {
+  const { name, score } = req.body;
+
+  if (!name || score == null) {
+    return res.status(400).json({ error: "Invalid submission" });
+  }
+
+  const existingPlayer = data.leaderboard.find(p => p.name === name);
+
+  if (existingPlayer) {
+    // Keep only highest score
+    if (score > existingPlayer.score) {
+      existingPlayer.score = score;
+      existingPlayer.date = new Date();
+    }
+  } else {
+    data.leaderboard.push({
+      name,
+      score,
+      date: new Date()
+    });
+  }
+
+  data.leaderboard.sort((a, b) => b.score - a.score);
+
   saveData();
-  res.json({msg:"Saved"});
+
+  res.json({ message: "Score saved successfully" });
 });
 
 // Leaderboard
-app.get('/leaderboard',(req,res)=>{
-  res.json(data.leaderboard.slice(0,10));
+app.get('/leaderboard', (req, res) => {
+  const top10 = data.leaderboard
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 10);
+
+  res.json(top10);
 });
 
 // MCQ Generator
