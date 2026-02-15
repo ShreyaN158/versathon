@@ -1,15 +1,42 @@
 <link rel="stylesheet" href="style.css">
 <div class="container">
-<h1>Leaderboard</h1>
+<h1>Quiz Leaderboard</h1>
 <div id="board"></div>
+
+<h1 style="margin-top:40px;">XP Leaderboard</h1>
+<div id="xp-board"></div>
+
+<div style="text-align:center; margin-top:30px;">
+  <a href="xp-display.html" style="display:inline-block; padding:15px 30px; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:white; text-decoration:none; border-radius:10px; font-weight:bold;">
+    View Full XP System
+  </a>
+</div>
 </div>
 
 <script>
+// Quiz Leaderboard
 fetch('/leaderboard')
 .then(res=>res.json())
 .then(data=>{
  data.forEach((u,i)=>{
-  board.innerHTML+=`<div class="leaderboard-item">${i+1}. ${u.name}<span>${u.score}</span></div>`;
+  board.innerHTML+=`<div class="leaderboard-item">${i+1}. ${u.name}<span>${u.score} pts</span></div>`;
  });
+});
+
+// XP Leaderboard
+fetch('/api/leaderboard')
+.then(res=>res.json())
+.then(data=>{
+ const xpBoard = document.getElementById('xp-board');
+ if(data.length === 0){
+   xpBoard.innerHTML = '<p style="text-align:center; color:#666;">No XP data yet. Complete some quizzes!</p>';
+ } else {
+   data.forEach((u,i)=>{
+    xpBoard.innerHTML+=`<div class="leaderboard-item">${i+1}. ${u.username}<span>Level ${u.level} - ${u.xp} XP</span></div>`;
+   });
+ }
+})
+.catch(error=>{
+  console.error('Error loading XP leaderboard:', error);
 });
 </script>

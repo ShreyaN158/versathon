@@ -1,18 +1,88 @@
 <link rel="stylesheet" href="style.css">
+
 <div class="container">
-<h1>MCQ Generator</h1>
-<textarea id="text"></textarea>
-<button onclick="generate()">Generate</button>
-<div id="output"></div>
+  <h1>MCQ Generator</h1>
+
+  <select id="lesson">
+    <option value="">Select Lesson</option>
+    <option value="lesson1">Lesson 1</option>
+    <option value="lesson2">Lesson 2</option>
+    <option value="lesson3">Lesson 3</option>
+  </select>
+
+  <textarea id="text" rows="5" placeholder="Paste paragraph here"></textarea>
+
+  <button onclick="generate()">Generate</button>
+
+  <div id="output"></div>
 </div>
 
 <script>
-function generate(){
- fetch('/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:text.value})})
- .then(res=>res.json())
- .then(data=>{
-  output.innerHTML='';
-  data.forEach(q=>output.innerHTML+=`<p>${q.question}<br>${q.options.join('<br>')}</p>`);
- });
+function escapeHTML(str) {
+  return str.replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+}
+
+function generate() {
+  const lesson = document.getElementById('lesson').value;
+  const text = document.getElementById('text').value.trim();
+  const output = document.getElementById('output');
+
+  if (!lesson) {
+    alert('Please select a lesson first.');
+    return;
+  }
+  if (!text) {
+    alert('Please enter some text to generate questions.');
+    return;
+  }
+
+  // Clear previous output
+  output.innerHTML = '';
+
+  // Simple dummy MCQ generator: split text into sentences and make them questions
+  const sentences = text.split('.').filter(s => s.trim() !== '');
+  const numQuestions = Math.min(5, sentences.length); // max 5 questions
+  for (let i = 0; i < numQuestions; i++) {
+    const questionText = `What is the key point in: "${sentences[i].trim()}"?`;
+
+    // dummy options
+    const options = [
+      'Option A',
+      'Option B',
+      'Option C',
+      'Option D'
+    ];
+
+    const answer = options[0]; // pick first as correct for demo
+
+    output.innerHTML += `
+      <div class="mcq-card">
+
+        <div class="question-block">
+          <h3>Question ${i+1}</h3>
+          <input type="text" value="${escapeHTML(questionText)}" class="edit-input question-input" placeholder="Enter question here">
+        </div>
+
+        <div class="options-block">
+          <h4>Options</h4>
+          ${options.map((opt, idx) => `
+            <input type="text" value="${escapeHTML(opt)}" class="edit-input option-input" placeholder="Option ${idx + 1}">
+          `).join('')}
+        </div>
+
+        <div class="answer-block">
+          <h4>Correct Answer</h4>
+          <input type="text" value="${escapeHTML(answer)}" class="edit-input answer-input" placeholder="Enter correct answer">
+        </div>
+
+        <input type="hidden" class="lesson-input" value="${lesson}">
+
+      </div>
+    `;
+  }
 }
 </script>
