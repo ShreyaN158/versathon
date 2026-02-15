@@ -2,12 +2,70 @@
   "leaderboard": [
     {
       "name": "sh",
-      "score": 5
+      "score": 5,
+      "date": "2026-02-15T06:27:44.131Z"
     },
     {
       "name": "shru",
       "score": 3,
       "date": "2026-02-15T06:27:44.131Z"
+    },
+    {
+      "name": "asafare",
+      "score": 0,
+      "date": "2026-02-15T09:38:23.868Z"
+    },
+    {
+      "name": "shruthi",
+      "score": 0,
+      "date": "2026-02-15T09:38:44.646Z"
+    },
+    {
+      "name": "shreya",
+      "score": 0,
+      "date": "2026-02-15T09:44:44.082Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "user_1",
+      "username": "sh",
+      "xp": 0,
+      "level": 1,
+      "lastXpGain": null,
+      "createdAt": "2026-02-15T06:27:44.131Z"
+    },
+    {
+      "id": "user_2",
+      "username": "shru",
+      "xp": 0,
+      "level": 1,
+      "lastXpGain": null,
+      "createdAt": "2026-02-15T06:27:44.131Z"
+    },
+    {
+      "id": "user_1771148303868",
+      "username": "asafare",
+      "xp": 50,
+      "level": 1,
+      "lastXpGain": "2026-02-15T09:38:23.869Z",
+      "createdAt": "2026-02-15T09:38:23.869Z"
+    },
+    {
+      "id": "user_1771148324646",
+      "username": "shruthi",
+      "xp": 50,
+      "level": 1,
+      "lastXpGain": "2026-02-15T09:38:44.647Z",
+      "createdAt": "2026-02-15T09:38:44.646Z"
+    },
+    {
+      "id": "user_1771148684082",
+      "username": "shreya",
+      "xp": 100,
+      "level": 1,
+      "lastXpGain": "2026-02-15T09:45:00.058Z",
+      "createdAt": "2026-02-15T09:44:44.082Z"
     }
   ]
 }
